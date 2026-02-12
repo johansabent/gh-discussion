@@ -8,7 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	gh "github.com/cli/go-gh"
 	graphql "github.com/cli/shurcooL-graphql"
-	"github.com/joaom00/gh-discussions/ui"
+	"github.com/johansabent/gh-discussion/ui"
 
 	"github.com/spf13/cobra"
 )

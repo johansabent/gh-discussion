@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/bubbles v0.10.2
 	github.com/charmbracelet/glamour v0.5.0
 	github.com/cli/go-gh v0.0.3
-	github.com/cli/safeexec v1.0.0
+	github.com/cli/safeexec v1.0.1
 	github.com/cli/shurcooL-graphql v0.0.1
 	github.com/spf13/cobra v1.2.1
 )

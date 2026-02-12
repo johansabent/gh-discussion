@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/joaom00/gh-discussions/cmd"
+	"github.com/johansabent/gh-discussion/cmd"
 	"github.com/spf13/cobra"
 )
 

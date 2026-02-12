@@ -2,7 +2,7 @@
 
 ## 📦 Installation
 ```
-gh extension install joaom00/gh-discussion
+gh extension install johansabent/gh-discussion
 ```
 
 ## 🚀 Usage

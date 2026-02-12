@@ -1,4 +1,4 @@
-module github.com/joaom00/gh-discussions
+module github.com/johansabent/gh-discussion
 
 go 1.17
 

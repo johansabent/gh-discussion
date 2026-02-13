@@ -79,8 +79,9 @@ github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5P
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
 github.com/cli/go-gh v0.0.3 h1:GcVgUa7q0SeauIRbch3VSUXVij6+c49jtAHv7WuWj5c=
 github.com/cli/go-gh v0.0.3/go.mod h1:J1eNgrPJYAUy7TwPKj7GW1ibqI+WCiMndtyzrCyZIiQ=
-github.com/cli/safeexec v1.0.0 h1:0VngyaIyqACHdcMNWfo6+KdUYnqEr2Sg+bSP1pdF+dI=
 github.com/cli/safeexec v1.0.0/go.mod h1:Z/D4tTN8Vs5gXYHDCbaM1S/anmEDnJb1iW0+EJ5zx3Q=
+github.com/cli/safeexec v1.0.1 h1:e/C79PbXF4yYTN/wauC4tviMxEV13BwljGj0N9j+N00=
+github.com/cli/safeexec v1.0.1/go.mod h1:Z/D4tTN8Vs5gXYHDCbaM1S/anmEDnJb1iW0+EJ5zx3Q=
 github.com/cli/shurcooL-graphql v0.0.1 h1:/9J3t9O6p1B8zdBBtQighq5g7DQRItBwuwGh3SocsKM=
 github.com/cli/shurcooL-graphql v0.0.1/go.mod h1:U7gCSuMZP/Qy7kbqkk5PrqXEeDgtfG5K+W+u8weorps=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=

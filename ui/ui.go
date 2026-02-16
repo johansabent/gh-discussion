@@ -26,7 +26,6 @@ type Model struct {
 	cursor          cursor
 	help            help.Model
 	keyMap          keyMap
-	keys            keyMap
 }
 
 type contentViewport struct {
@@ -53,7 +52,6 @@ func NewModel(data *[]Discussion) Model {
 	return Model{
 		data:   *data,
 		keyMap: DefaultKeyMap(),
-		keys:   DefaultKeyMap(),
 		cursor: cursor{
 			currSectionID: 0,
 			currDiscID:    0,

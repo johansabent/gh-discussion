@@ -85,22 +85,5 @@ func listRun(opts listOptions) error {
 		log.Fatal(err)
 	}
 
-	// items := []list.Item{}
-
-	// for _, v := range nodes {
-	// 	items = append(items, item{title: v.Title, desc: v.Author.Login})
-	// }
-
-	// d := list.NewDefaultDelegate()
-
-	// m := ui.Model{List: list.New(items, d, 0, 0)}
-
-	// p := tea.NewProgram(m, tea.WithAltScreen())
-
-	// if err := p.Start(); err != nil {
-	// 	fmt.Println("Error running program:", err)
-	// 	os.Exit(1)
-	// }
-
 	return nil
 }

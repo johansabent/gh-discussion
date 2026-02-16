@@ -30,11 +30,11 @@ func min(a, b int) int {
 }
 
 func (m *Model) prevDisc() {
-	m.cursor.currDiscId = max(m.cursor.currDiscId-1, 0)
+	m.cursor.currDiscID = max(m.cursor.currDiscID-1, 0)
 }
 
 func (m *Model) nextDisc() {
-	newDiscID := min(m.cursor.currDiscId+1, len(*m.data)-1)
+	newDiscID := min(m.cursor.currDiscID+1, len(m.data)-1)
 	newDiscID = max(newDiscID, 0)
-	m.cursor.currDiscId = newDiscID
+	m.cursor.currDiscID = newDiscID
 }

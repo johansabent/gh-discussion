@@ -5,6 +5,10 @@ import "github.com/charmbracelet/bubbles/key"
 type keyMap struct {
 	Up            key.Binding
 	Down          key.Binding
+	CursorUp      key.Binding
+	CursorDown    key.Binding
+	PrevSection   key.Binding
+	NextSection   key.Binding
 	TogglePreview key.Binding
 	OpenBrowser   key.Binding
 	Help          key.Binding
@@ -23,29 +27,38 @@ func (k keyMap) FullHelp() [][]key.Binding {
 	}
 }
 
-var keys = keyMap{
-	Up: key.NewBinding(
-		key.WithKeys("up", "k"),
-		key.WithHelp("↑/k", "move up"),
-	),
-	Down: key.NewBinding(
-		key.WithKeys("down", "j"),
-		key.WithHelp("↓/j", "move down"),
-	),
-	TogglePreview: key.NewBinding(
-		key.WithKeys("p"),
-		key.WithHelp("p", "open in Preview"),
-	),
-	OpenBrowser: key.NewBinding(
-		key.WithKeys("b"),
-		key.WithHelp("b", "open in Browser"),
-	),
-	Help: key.NewBinding(
-		key.WithKeys("?"),
-		key.WithHelp("?", "toggle help"),
-	),
-	Quit: key.NewBinding(
-		key.WithKeys("q", "esc", "ctrl+c"),
-		key.WithHelp("q", "quit"),
-	),
+func DefaultKeyMap() keyMap {
+	km := keyMap{
+		Up: key.NewBinding(
+			key.WithKeys("up", "k"),
+			key.WithHelp("↑/k", "move up"),
+		),
+		Down: key.NewBinding(
+			key.WithKeys("down", "j"),
+			key.WithHelp("↓/j", "move down"),
+		),
+		TogglePreview: key.NewBinding(
+			key.WithKeys("p"),
+			key.WithHelp("p", "open in Preview"),
+		),
+		OpenBrowser: key.NewBinding(
+			key.WithKeys("b"),
+			key.WithHelp("b", "open in Browser"),
+		),
+		Help: key.NewBinding(
+			key.WithKeys("?"),
+			key.WithHelp("?", "toggle help"),
+		),
+		Quit: key.NewBinding(
+			key.WithKeys("q", "esc", "ctrl+c"),
+			key.WithHelp("q", "quit"),
+		),
+	}
+	km.CursorUp = km.Up
+	km.CursorDown = km.Down
+	km.PrevSection = km.Up
+	km.NextSection = km.Down
+	return km
 }
+
+var keys = DefaultKeyMap()

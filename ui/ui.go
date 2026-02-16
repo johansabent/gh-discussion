@@ -1,13 +1,18 @@
 package ui
 
 import (
-	"log"
+	"fmt"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 )
+
+type Section struct {
+	Name       string
+	CategoryID string
+}
 
 type Model struct {
 	ready           bool
@@ -21,6 +26,7 @@ type Model struct {
 	cursor          cursor
 	help            help.Model
 	keyMap          keyMap
+	keys            keyMap
 }
 
 type contentViewport struct {
@@ -43,27 +49,16 @@ type initMsg struct {
 	sections []Section
 }
 
-func NewModel(owner, name string) Model {
-	// helperModel := help.NewModel()
-	// style := lipgloss.NewStyle().Foreground(secondaryText)
-	// helperModel.Styles = help.Styles{
-	// 	ShortDesc:      style.Copy(),
-	// 	FullDesc:       style.Copy(),
-	// 	ShortSeparator: style.Copy(),
-	// 	FullSeparator:  style.Copy(),
-	// 	ShortKey:       style.Copy(),
-	// 	FullKey:        style.Copy(),
-	// 	Ellipsis:       style.Copy(),
-	// }
-
+func NewModel(data *[]Discussion) Model {
 	return Model{
-		Owner:  owner,
-		Name:   name,
+		data:   *data,
 		keyMap: DefaultKeyMap(),
+		keys:   DefaultKeyMap(),
 		cursor: cursor{
 			currSectionID: 0,
 			currDiscID:    0,
 		},
+		help: help.New(),
 	}
 }
 
@@ -109,36 +104,8 @@ func (m *Model) nextSection() {
 	m.cursor.currSectionID = newCursor
 }
 
-func initScreen(owner, name string) tea.Cmd {
-	return func() tea.Msg {
-		categories, err := FetchDiscCategories(owner, name)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		var sections []Section
-
-		for _, category := range categories {
-			sections = append(
-				sections,
-				Section{Name: category.Name, CategoryID: category.ID},
-			)
-		}
-
-		data, err := FetchAllDiscs(owner, name)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		return initMsg{
-			data,
-			sections,
-		}
-	}
-}
-
 func (m Model) Init() tea.Cmd {
-	return initScreen(m.Owner, m.Name)
+	return nil
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -152,6 +119,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		case key.Matches(msg, m.keyMap.Quit):
 			return m, tea.Quit
+		case key.Matches(msg, m.keyMap.CursorUp):
+			m.cursorUp()
+		case key.Matches(msg, m.keyMap.CursorDown):
+			m.cursorDown()
 		}
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
@@ -174,16 +145,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 		return m, nil
-
-	case initMsg:
-		m.sections = msg.sections
-		m.data = msg.data
-		return m, nil
-
 	}
 
 	cmds = append(cmds, m.updateSection(msg))
-
 	cmds = append(cmds, cmd)
 
 	return m, tea.Batch(cmds...)
@@ -214,15 +178,46 @@ func (m *Model) updateSection(msg tea.Msg) tea.Cmd {
 }
 
 func (m Model) View() string {
+	if !m.ready {
+		return "Loading..."
+	}
+
 	s := strings.Builder{}
-
-	s.WriteString(m.tabsView())
+	
+	// Simple list view of discussions
+	s.WriteString("Discussions\n")
+	s.WriteString("===========\n\n")
+	
+	for i, d := range m.data {
+		prefix := "  "
+		if i == m.cursor.currDiscID {
+			prefix = "> "
+		}
+		s.WriteString(fmt.Sprintf("%s%s\n", prefix, d.Title))
+	}
+	
 	s.WriteString("\n")
-
-	s.WriteString(m.sectionView())
-	s.WriteString("\n")
-
-	s.WriteString(m.helperView())
+	s.WriteString("Use ↑/↓ to navigate, q to quit\n")
 
 	return s.String()
+}
+
+func (m Model) tabsView() string {
+	return ""
+}
+
+func (m Model) sectionView() string {
+	s := strings.Builder{}
+	for i, d := range m.data {
+		prefix := "  "
+		if i == m.cursor.currDiscID {
+			prefix = "> "
+		}
+		s.WriteString(fmt.Sprintf("%s%s\n", prefix, d.Title))
+	}
+	return s.String()
+}
+
+func (m Model) helperView() string {
+	return "Use ↑/↓ to navigate, q to quit"
 }
